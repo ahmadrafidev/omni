@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Omni - Responsive Layout Tester & Accessibility Tool
+
+Omni is a responsive layout testing tool that helps developers and designers create, test, and validate responsive layouts across different device sizes. It combines real-time preview capabilities with accessibility checking to ensure your layouts are both responsive and accessible.
+
+## Core Features
+
+### 🎯 Responsive Testing
+- **Multi-device Preview**: Test layouts across mobile (375px), tablet (768px), and desktop (1440px) breakpoints
+- **One-click Device Switching**: Instantly switch between device sizes to validate responsive behavior
+- **Live Preview**: See your changes in real-time across all device sizes
+
+### ♿ Accessibility Testing
+- **WCAG Compliance**: Built-in checks for accessibility standards
+- **Touch Target Validation**: Ensure interactive elements meet minimum size requirements
+- **Font Scaling**: Test text readability across different viewport sizes
+- **Color Contrast**: Validate color combinations for accessibility
+
+### 🎨 Layout Building
+- **Drag-and-Drop Interface**: Intuitive grid builder for creating layout mockups
+- **Element Library**: Pre-built components (containers, text, images, buttons)
+- **Real-time Styling**: Instant property updates and style modifications
+- **Responsive Controls**: Fine-tune layout behavior across breakpoints
+
+### 📦 Export & Integration
+- **CSS Export**: Generate responsive CSS with Tailwind utilities or custom media queries
+- **Code Generation**: Export clean, production-ready code
+- **Component Reuse**: Save and reuse layout components
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **UI Components**: Radix UI primitives with Tailwind CSS
+- **State Management**: React Hooks
+- **Drag and Drop**: React DnD
+- **Form Handling**: React Hook Form with Zod validation
+- **Styling**: Tailwind CSS with custom animations
+- **Icons**: Lucide React
+- **Theme**: next-themes for dark mode support
 
 ## Getting Started
 
-First, run the development server:
-
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ahmadrafidev/omni
+cd omni
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## Use Cases
 
-To learn more about Next.js, take a look at the following resources:
+1. **Design Validation**: Test responsive layouts before implementation
+2. **Accessibility Auditing**: Ensure WCAG compliance across breakpoints
+3. **Rapid Prototyping**: Quickly create and test layout concepts
+4. **Team Collaboration**: Share and review responsive designs
+5. **Code Generation**: Export production-ready responsive CSS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions are welcome! Please feel free to submit a Pull Request. We're particularly interested in:
+- Additional accessibility checks
+- New device breakpoints
+- Enhanced export options
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
