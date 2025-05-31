@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
+
 import { DeviceSelector } from "./components/device-selector"
 import { GridBuilder } from "./components/grid-builder"
 import { PreviewArea } from "./components/preview-area"
@@ -123,14 +124,18 @@ export default function Omni() {
         <div className="flex-1 flex overflow-hidden">
           {/* Sidebar */}
           <aside className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
-            <GridBuilder onAddElement={addElement} />
-            {selectedElement && (
-              <PropertiesPanel
-                element={selectedElement}
-                onUpdateElement={updateElement}
-                onDeleteElement={deleteElement}
-              />
-            )}
+            <div className="flex-none">
+              <GridBuilder onAddElement={addElement} />
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              {selectedElement && (
+                <PropertiesPanel
+                  element={selectedElement}
+                  onUpdateElement={updateElement}
+                  onDeleteElement={deleteElement}
+                />
+              )}
+            </div>
           </aside>
 
           {/* Preview Area */}
@@ -154,7 +159,7 @@ export default function Omni() {
 
         {/* Export Modal */}
         {showExportModal && (
-          <ExportModal elements={elements} devices={deviceSizes} onClose={() => setShowExportModal(false)} />
+          <ExportModal elements={elements} onClose={() => setShowExportModal(false)} />
         )}
       </div>
     </DndProvider>

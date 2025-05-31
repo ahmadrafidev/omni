@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useRef } from "react"
 import { useDrop } from "react-dnd"
 import { DraggableElement } from "./draggable-element"
 import type { DeviceSize, GridElement } from "../page"
@@ -14,12 +14,14 @@ interface PreviewAreaProps {
 }
 
 export function PreviewArea({ device, elements, selectedElement, onSelectElement, onUpdateElement }: PreviewAreaProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const [{ isOver }, drop] = useDrop({
     accept: "element",
     drop: (item: { id: string; type: string }, monitor) => {
       const offset = monitor.getClientOffset()
       if (offset) {
-        const containerRect = document.getElementById("preview-container")?.getBoundingClientRect()
+        const containerRect = containerRef.current?.getBoundingClientRect()
         if (containerRect) {
           const x = offset.x - containerRect.left
           const y = offset.y - containerRect.top
@@ -34,13 +36,6 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
     }),
   })
 
-  const handleElementMove = useCallback(
-    (id: string, position: { x: number; y: number }) => {
-      onUpdateElement(id, { position })
-    },
-    [onUpdateElement],
-  )
-
   const handleElementResize = useCallback(
     (id: string, size: { width: number; height: number }) => {
       onUpdateElement(id, {
@@ -49,7 +44,7 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
           ...elements.find((el) => el.id === id)?.styles,
           width: `${size.width}px`,
           height: `${size.height}px`,
-        } as any,
+        } as GridElement["styles"],
       })
     },
     [onUpdateElement, elements],
@@ -73,7 +68,10 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
           </span>
         </div>
         <div
-          ref={drop}
+          ref={(node) => {
+            drop(node)
+            containerRef.current = node
+          }}
           id="preview-container"
           className={`relative w-full h-full overflow-hidden ${isOver ? "bg-blue-50" : "bg-white"}`}
           onClick={() => onSelectElement(null)}
@@ -85,7 +83,6 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
               element={element}
               isSelected={selectedElement?.id === element.id}
               onSelect={() => onSelectElement(element)}
-              onMove={handleElementMove}
               onResize={handleElementResize}
             />
           ))}

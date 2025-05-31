@@ -1,8 +1,10 @@
-import { Inter } from "next/font/google"
+import { Geist } from "next/font/google"
 import { ThemeProvider } from "./components/theme-provider"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const geist = Geist({
+  subsets: ["latin"],
+})
 
 export const metadata = {
   title: "Omni",
@@ -16,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={geist.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

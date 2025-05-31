@@ -5,15 +5,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Copy, Download } from "lucide-react"
-import type { GridElement, DeviceSize } from "../page"
+import type { GridElement } from "../page"
 
 interface ExportModalProps {
   elements: GridElement[]
-  devices: DeviceSize[]
   onClose: () => void
 }
 
-export function ExportModal({ elements, devices, onClose }: ExportModalProps) {
+export function ExportModal({ elements, onClose }: ExportModalProps) {
   const [copied, setCopied] = useState(false)
 
   const generateTailwindCSS = () => {

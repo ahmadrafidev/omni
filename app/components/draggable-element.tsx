@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useRef, useState, useCallback } from "react"
+import { useRef, useCallback } from "react"
 import { useDrag } from "react-dnd"
 import type { GridElement } from "../page"
 
@@ -10,13 +9,11 @@ interface DraggableElementProps {
   element: GridElement
   isSelected: boolean
   onSelect: () => void
-  onMove: (id: string, position: { x: number; y: number }) => void
   onResize: (id: string, size: { width: number; height: number }) => void
 }
 
-export function DraggableElement({ element, isSelected, onSelect, onMove, onResize }: DraggableElementProps) {
+export function DraggableElement({ element, isSelected, onSelect, onResize }: DraggableElementProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isResizing, setIsResizing] = useState(false)
 
   const [{ isDragging }, drag] = useDrag({
     type: "element",
@@ -39,7 +36,6 @@ export function DraggableElement({ element, isSelected, onSelect, onMove, onResi
   const handleResizeStart = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      setIsResizing(true)
 
       const startX = e.clientX
       const startY = e.clientY
@@ -53,7 +49,6 @@ export function DraggableElement({ element, isSelected, onSelect, onMove, onResi
       }
 
       const handleMouseUp = () => {
-        setIsResizing(false)
         document.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseUp)
       }
@@ -72,8 +67,8 @@ export function DraggableElement({ element, isSelected, onSelect, onMove, onResi
             style={{
               fontSize: element.styles.fontSize,
               fontWeight: element.styles.fontWeight,
-              textAlign: element.styles.textAlign as any,
-              color: element.type === "button" ? "white" : "black",
+              textAlign: element.styles.textAlign as "left" | "center" | "right",
+              color: "black",
             }}
           >
             {element.content}

@@ -22,7 +22,7 @@ export function AccessibilityChecker({ elements, device }: AccessibilityCheckerP
     const issues: AccessibilityIssue[] = []
 
     elements.forEach((element) => {
-      // Check touch target size (minimum 44px for mobile)
+      // Check touch target size (minimum 44px for mobile) 
       if (device.name === "Mobile" && element.type === "button") {
         const minSize = 44
         if (element.size.width < minSize || element.size.height < minSize) {
@@ -99,17 +99,6 @@ export function AccessibilityChecker({ elements, device }: AccessibilityCheckerP
         return <AlertTriangle className="w-4 h-4 text-yellow-500" />
       case "success":
         return <CheckCircle className="w-4 h-4 text-green-500" />
-    }
-  }
-
-  const getBadgeVariant = (type: AccessibilityIssue["type"]) => {
-    switch (type) {
-      case "error":
-        return "destructive"
-      case "warning":
-        return "secondary"
-      case "success":
-        return "default"
     }
   }
 
