@@ -93,6 +93,20 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
             {element.content}
           </button>
         )
+      case "input":
+        return (
+          <input
+            type="text"
+            className="w-full h-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{
+              fontSize: element.styles.fontSize,
+              backgroundColor: element.styles.backgroundColor || "white",
+              borderRadius: element.styles.borderRadius,
+            }}
+            placeholder={element.content}
+            defaultValue={element.content}
+          />
+        )
       default:
         return (
           <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">{element.content}</div>

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Type, ImageIcon, Square, MousePointer } from "lucide-react"
+import { Type, ImageIcon, Square, MousePointer, TextCursorInput } from "lucide-react"
 import type { GridElement } from "../page"
 
 interface GridBuilderProps {
@@ -14,6 +14,7 @@ const elementTypes = [
   { type: "text" as const, label: "Text", icon: Type, description: "Text content" },
   { type: "image" as const, label: "Image", icon: ImageIcon, description: "Image placeholder" },
   { type: "button" as const, label: "Button", icon: MousePointer, description: "Interactive button" },
+  { type: "input" as const, label: "Input", icon: TextCursorInput, description: "Text input field" },
 ]
 
 export function GridBuilder({ onAddElement }: GridBuilderProps) {

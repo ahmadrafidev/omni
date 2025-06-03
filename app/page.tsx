@@ -16,7 +16,7 @@ import { Download, Eye } from "lucide-react"
 
 export interface GridElement {
   id: string
-  type: "container" | "text" | "image" | "button"
+  type: "container" | "text" | "image" | "button" | "input"
   content: string
   styles: {
     width: string
@@ -58,17 +58,24 @@ export default function Omni() {
       id: `element-${Date.now()}`,
       type,
       content:
-        type === "text" ? "Sample Text" : type === "button" ? "Button" : type === "image" ? "Image" : "Container",
+        type === "text" ? "Sample Text" : 
+        type === "button" ? "Button" : 
+        type === "image" ? "Image" : 
+        type === "input" ? "Enter text..." : 
+        "Container",
       styles: {
         width: "200px",
         height: type === "text" ? "auto" : "100px",
-        backgroundColor: type === "container" ? "#f3f4f6" : type === "button" ? "#3b82f6" : "transparent",
+        backgroundColor: type === "container" ? "#f3f4f6" : 
+                        type === "button" ? "#3b82f6" : 
+                        type === "input" ? "white" : 
+                        "transparent",
         padding: "16px",
         margin: "8px",
         fontSize: "16px",
         fontWeight: "normal",
         textAlign: "left",
-        borderRadius: type === "button" ? "8px" : "0px",
+        borderRadius: type === "button" || type === "input" ? "8px" : "0px",
       },
       position: { x: 50, y: 50 },
       size: { width: 200, height: type === "text" ? 50 : 100 },
