@@ -1,7 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Monitor, Smartphone, Tablet } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+
 import type { DeviceSize } from "../page"
 
 interface DeviceSelectorProps {

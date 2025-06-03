@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
+import { Download, Eye } from "lucide-react"
 
 import { DeviceSelector } from "./components/device-selector"
 import { GridBuilder } from "./components/grid-builder"
@@ -12,11 +13,10 @@ import { AccessibilityChecker } from "./components/accessibility-checker"
 import { ExportModal } from "./components/export-modal"
 import { ThemeToggle } from "./components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import { Download, Eye } from "lucide-react"
 
 export interface GridElement {
   id: string
-  type: "container" | "text" | "image" | "button" | "input"
+  type: "container" | "text" | "image" | "button" | "input" | "checkbox" | "select"
   content: string
   styles: {
     width: string
@@ -62,23 +62,32 @@ export default function Omni() {
         type === "button" ? "Button" : 
         type === "image" ? "Image" : 
         type === "input" ? "Enter text..." : 
+        type === "checkbox" ? "Checkbox label" :
+        type === "select" ? "Select an option" :
         "Container",
       styles: {
         width: "200px",
-        height: type === "text" ? "auto" : "100px",
+        height: type === "text" ? "auto" : 
+                type === "checkbox" ? "24px" :
+                "100px",
         backgroundColor: type === "container" ? "#f3f4f6" : 
                         type === "button" ? "#3b82f6" : 
-                        type === "input" ? "white" : 
+                        type === "input" || type === "select" ? "white" : 
                         "transparent",
         padding: "16px",
         margin: "8px",
         fontSize: "16px",
         fontWeight: "normal",
         textAlign: "left",
-        borderRadius: type === "button" || type === "input" ? "8px" : "0px",
+        borderRadius: type === "button" || type === "input" || type === "select" ? "8px" : "0px",
       },
       position: { x: 50, y: 50 },
-      size: { width: 200, height: type === "text" ? 50 : 100 },
+      size: { 
+        width: 200, 
+        height: type === "text" ? 50 : 
+                type === "checkbox" ? 24 :
+                100 
+      },
     }
     setElements((prev) => [...prev, newElement])
   }, [])

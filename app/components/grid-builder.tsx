@@ -1,8 +1,10 @@
 "use client"
 
+import { Type, ImageIcon, Square, MousePointer, TextCursorInput, CheckSquare, ChevronDown } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Type, ImageIcon, Square, MousePointer, TextCursorInput } from "lucide-react"
+
 import type { GridElement } from "../page"
 
 interface GridBuilderProps {
@@ -15,6 +17,8 @@ const elementTypes = [
   { type: "image" as const, label: "Image", icon: ImageIcon, description: "Image placeholder" },
   { type: "button" as const, label: "Button", icon: MousePointer, description: "Interactive button" },
   { type: "input" as const, label: "Input", icon: TextCursorInput, description: "Text input field" },
+  { type: "checkbox" as const, label: "Checkbox", icon: CheckSquare, description: "Checkbox input" },
+  { type: "select" as const, label: "Select", icon: ChevronDown, description: "Dropdown select" },
 ]
 
 export function GridBuilder({ onAddElement }: GridBuilderProps) {

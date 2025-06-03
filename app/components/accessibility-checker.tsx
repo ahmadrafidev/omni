@@ -1,8 +1,8 @@
 "use client"
 
+import { AlertTriangle, CheckCircle, XCircle } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { AlertTriangle, CheckCircle, XCircle } from "lucide-react"
 import type { GridElement, DeviceSize } from "../page"
 
 interface AccessibilityCheckerProps {

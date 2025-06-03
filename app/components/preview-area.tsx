@@ -2,7 +2,9 @@
 
 import { useCallback, useRef } from "react"
 import { useDrop } from "react-dnd"
+
 import { DraggableElement } from "./draggable-element"
+
 import type { DeviceSize, GridElement } from "../page"
 
 interface PreviewAreaProps {

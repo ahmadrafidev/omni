@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from "react"
+
+import { Copy, Download } from "lucide-react"
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Copy, Download } from "lucide-react"
+
 import type { GridElement } from "../page"
 
 interface ExportModalProps {

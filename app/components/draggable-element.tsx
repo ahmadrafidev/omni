@@ -3,6 +3,7 @@
 import type React from "react"
 import { useRef, useCallback } from "react"
 import { useDrag } from "react-dnd"
+
 import type { GridElement } from "../page"
 
 interface DraggableElementProps {
@@ -106,6 +107,31 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
             placeholder={element.content}
             defaultValue={element.content}
           />
+        )
+      case "checkbox":
+        return (
+          <div className="w-full h-full flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            <label className="text-sm text-gray-700">{element.content}</label>
+          </div>
+        )
+      case "select":
+        return (
+          <select
+            className="w-full h-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            style={{
+              fontSize: element.styles.fontSize,
+              borderRadius: element.styles.borderRadius,
+            }}
+          >
+            <option value="">{element.content}</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
         )
       default:
         return (
