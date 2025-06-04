@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { Download, Eye } from "lucide-react"
+import { Download, Eye, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { DeviceSelector } from "./components/device-selector"
 import { GridBuilder } from "./components/grid-builder"
@@ -52,6 +52,7 @@ export default function Omni() {
   const [selectedElement, setSelectedElement] = useState<GridElement | null>(null)
   const [showExportModal, setShowExportModal] = useState(false)
   const [showAccessibilityPanel, setShowAccessibilityPanel] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
   const addElement = useCallback((type: GridElement["type"]) => {
     const newElement: GridElement = {
@@ -139,12 +140,12 @@ export default function Omni() {
         {/* Main Content */}
         <div className="flex-1 flex overflow-hidden">
           {/* Sidebar */}
-          <aside className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+          <aside className={`${isSidebarCollapsed ? 'w-12' : 'w-80'} bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 relative`}>
             <div className="flex-none">
-              <GridBuilder onAddElement={addElement} />
+              {!isSidebarCollapsed && <GridBuilder onAddElement={addElement} />}
             </div>
             <div className="flex-1 overflow-y-auto">
-              {selectedElement && (
+              {selectedElement && !isSidebarCollapsed && (
                 <PropertiesPanel
                   element={selectedElement}
                   onUpdateElement={updateElement}
@@ -152,6 +153,18 @@ export default function Omni() {
                 />
               )}
             </div>
+            <button
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+              className={`absolute top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-r-lg p-1 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                isSidebarCollapsed ? 'left-10' : 'left-80'
+              }`}
+            >
+              {isSidebarCollapsed ? (
+                <ChevronRight className="w-4 h-4" />
+              ) : (
+                <ChevronLeft className="w-4 h-4" />
+              )}
+            </button>
           </aside>
 
           {/* Preview Area */}
