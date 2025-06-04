@@ -115,11 +115,11 @@ export default function Omni() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
         {/* Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Omni</h1>
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white">Omni</h1>
             <div className="flex items-center gap-4">
               <DeviceSelector devices={deviceSizes} currentDevice={currentDevice} onDeviceChange={setCurrentDevice} />
               <div className="flex items-center gap-2">

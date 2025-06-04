@@ -1,6 +1,7 @@
 "use client"
 
 import { Type, ImageIcon, Square, MousePointer, TextCursorInput, CheckSquare, ChevronDown } from "lucide-react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -21,14 +22,20 @@ const elementTypes = [
   { type: "select" as const, label: "Select", icon: ChevronDown, description: "Dropdown select" },
 ]
 
+const INITIAL_VISIBLE_COUNT = 5
+
 export function GridBuilder({ onAddElement }: GridBuilderProps) {
+  const [showAll, setShowAll] = useState(false)
+  const visibleElements = showAll ? elementTypes : elementTypes.slice(0, INITIAL_VISIBLE_COUNT)
+  const hasMore = elementTypes.length > INITIAL_VISIBLE_COUNT
+
   return (
     <Card className="m-4">
       <CardHeader>
         <CardTitle className="text-lg">Elements</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        {elementTypes.map(({ type, label, icon: Icon, description }) => (
+        {visibleElements.map(({ type, label, icon: Icon, description }) => (
           <Button
             key={type}
             variant="outline"
@@ -44,6 +51,15 @@ export function GridBuilder({ onAddElement }: GridBuilderProps) {
             </div>
           </Button>
         ))}
+        {hasMore && (
+          <Button
+            variant="ghost"
+            className="w-full text-sm text-muted-foreground hover:text-foreground"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? "Show less" : "See more"}
+          </Button>
+        )}
       </CardContent>
     </Card>
   )
