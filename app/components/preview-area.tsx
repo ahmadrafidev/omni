@@ -22,15 +22,21 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
     accept: "element",
     drop: (item: { id: string; type: string }, monitor) => {
       const offset = monitor.getClientOffset()
-      if (offset) {
-        const containerRect = containerRef.current?.getBoundingClientRect()
-        if (containerRect) {
-          const x = offset.x - containerRect.left
-          const y = offset.y - containerRect.top
-          onUpdateElement(item.id, {
-            position: { x: Math.max(0, x - 100), y: Math.max(0, y - 50) },
-          })
-        }
+      if (offset && containerRef.current) {
+        const containerRect = containerRef.current.getBoundingClientRect()
+        const x = Math.max(0, offset.x - containerRect.left - 100)
+        const y = Math.max(0, offset.y - containerRect.top - 50)
+        
+
+        const maxX = containerRect.width - 200 
+        const maxY = containerRect.height - 100 
+        
+        onUpdateElement(item.id, {
+          position: { 
+            x: Math.min(x, maxX), 
+            y: Math.min(y, maxY) 
+          },
+        })
       }
     },
     collect: (monitor) => ({
@@ -40,17 +46,37 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
 
   const handleElementResize = useCallback(
     (id: string, size: { width: number; height: number }) => {
-      onUpdateElement(id, {
-        size,
-        styles: {
-          ...elements.find((el) => el.id === id)?.styles,
-          width: `${size.width}px`,
-          height: `${size.height}px`,
-        } as GridElement["styles"],
-      })
+      const element = elements.find((el) => el.id === id)
+      if (!element) return
+
+
+      const containerRect = containerRef.current?.getBoundingClientRect()
+      if (containerRect) {
+        const maxWidth = containerRect.width - element.position.x
+        const maxHeight = containerRect.height - element.position.y
+        
+        const newWidth = Math.min(Math.max(50, size.width), maxWidth)
+        const newHeight = Math.min(Math.max(30, size.height), maxHeight)
+
+        onUpdateElement(id, {
+          size: { width: newWidth, height: newHeight },
+          styles: {
+            ...element.styles,
+            width: `${newWidth}px`,
+            height: `${newHeight}px`,
+          } as GridElement["styles"],
+        })
+      }
     },
     [onUpdateElement, elements],
   )
+
+  const handleContainerClick = useCallback((e: React.MouseEvent) => {
+
+    if (e.target === containerRef.current) {
+      onSelectElement(null)
+    }
+  }, [onSelectElement])
 
   return (
     <div className="flex-1 flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
@@ -75,13 +101,17 @@ export function PreviewArea({ device, elements, selectedElement, onSelectElement
             containerRef.current = node
           }}
           id="preview-container"
-          className={`relative w-full h-full overflow-hidden transition-colors duration-200 ${
+          className={`relative w-full overflow-hidden transition-colors duration-200 ${
             isOver 
               ? "bg-blue-50 dark:bg-blue-900/20" 
               : "bg-white dark:bg-gray-800"
           }`}
-          onClick={() => onSelectElement(null)}
-          style={{ height: device.height - 40 }}
+          onClick={handleContainerClick}
+          style={{ 
+            height: device.height - 40,
+            minHeight: device.height - 40,
+            maxHeight: device.height - 40
+          }}
         >
           {elements.map((element) => (
             <DraggableElement

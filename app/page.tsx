@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { Download, Eye, ChevronLeft, ChevronRight, PanelRightClose, PanelRightOpen } from "lucide-react"
+import { Download, Eye, PanelRightClose, PanelRightOpen } from "lucide-react"
 
 import { DeviceSelector } from "./components/device-selector"
 import { GridBuilder } from "./components/grid-builder"

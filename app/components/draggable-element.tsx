@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useRef, useCallback } from "react"
+import { useRef, useCallback, useState } from "react"
 import { useDrag } from "react-dnd"
 
 import type { GridElement } from "../page"
@@ -15,10 +15,17 @@ interface DraggableElementProps {
 
 export function DraggableElement({ element, isSelected, onSelect, onResize }: DraggableElementProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging: isDndDragging }, drag] = useDrag({
     type: "element",
-    item: { id: element.id, type: element.type },
+    item: () => {
+      setIsDragging(true)
+      return { id: element.id, type: element.type }
+    },
+    end: () => {
+      setIsDragging(false)
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -29,14 +36,18 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      onSelect()
+
+      if (!isDragging) {
+        onSelect()
+      }
     },
-    [onSelect],
+    [onSelect, isDragging],
   )
 
   const handleResizeStart = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
+      e.preventDefault()
 
       const startX = e.clientX
       const startY = e.clientY
@@ -44,6 +55,7 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
       const startHeight = element.size.height
 
       const handleMouseMove = (e: MouseEvent) => {
+        e.preventDefault()
         const newWidth = Math.max(50, startWidth + (e.clientX - startX))
         const newHeight = Math.max(30, startHeight + (e.clientY - startY))
         onResize(element.id, { width: newWidth, height: newHeight })
@@ -143,7 +155,9 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
   return (
     <div
       ref={ref}
-      className={`absolute cursor-move ${isDragging ? "opacity-50" : ""} ${isSelected ? "ring-2 ring-blue-500" : ""}`}
+      className={`absolute cursor-move select-none ${
+        isDndDragging ? "opacity-50" : ""
+      } ${isSelected ? "ring-2 ring-blue-500" : ""}`}
       style={{
         left: element.position.x,
         top: element.position.y,
@@ -153,6 +167,8 @@ export function DraggableElement({ element, isSelected, onSelect, onResize }: Dr
         padding: element.styles.padding,
         margin: element.styles.margin,
         borderRadius: element.styles.borderRadius,
+        transform: isDndDragging ? "translate(0, 0)" : "none",
+        touchAction: "none",
       }}
       onMouseDown={handleMouseDown}
     >
