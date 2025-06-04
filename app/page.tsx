@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { Download, Eye, ChevronLeft, ChevronRight } from "lucide-react"
+import { Download, Eye, ChevronLeft, ChevronRight, PanelRightClose, PanelRightOpen } from "lucide-react"
 
 import { DeviceSelector } from "./components/device-selector"
 import { GridBuilder } from "./components/grid-builder"
@@ -119,7 +119,19 @@ export default function Omni() {
         {/* Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white">Omni</h1>
+            <div className="flex flex-row items-center justify-center gap-8">
+              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Omni</h1>
+              <button
+                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                {isSidebarCollapsed ? (
+                  <PanelRightClose className="w-5 h-5" />
+                ) : (
+                  <PanelRightOpen className="w-5 h-5" />
+                )}
+              </button>
+            </div>
             <div className="flex items-center gap-4">
               <DeviceSelector devices={deviceSizes} currentDevice={currentDevice} onDeviceChange={setCurrentDevice} />
               <div className="flex items-center gap-2">
@@ -153,18 +165,6 @@ export default function Omni() {
                 />
               )}
             </div>
-            <button
-              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-              className={`absolute top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-r-lg p-1 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                isSidebarCollapsed ? 'left-10' : 'left-80'
-              }`}
-            >
-              {isSidebarCollapsed ? (
-                <ChevronRight className="w-4 h-4" />
-              ) : (
-                <ChevronLeft className="w-4 h-4" />
-              )}
-            </button>
           </aside>
 
           {/* Preview Area */}
