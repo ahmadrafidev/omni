@@ -117,10 +117,10 @@ export default function Omni() {
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-1.5">
           <div className="flex items-center justify-between">
             <div className="flex flex-row items-center justify-center gap-8">
-              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Omni</h1>
+              <h1 className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Omni</h1>
               <button
                 onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"

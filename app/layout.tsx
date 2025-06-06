@@ -1,6 +1,8 @@
 import { Geist } from "next/font/google"
 
 import { ThemeProvider } from "./components/theme-provider"
+import { DeviceWarning } from "@/components/device-warning"
+
 import "./globals.css"
 
 const geist = Geist({
@@ -26,6 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <DeviceWarning />
           {children}
         </ThemeProvider>
       </body>
